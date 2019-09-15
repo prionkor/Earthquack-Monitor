@@ -1,25 +1,53 @@
 import React from 'react';
-import { GoogleMap, Marker, withGoogleMap, withScriptjs } from "react-google-maps"
+import { GoogleMap, withGoogleMap, withScriptjs } from "react-google-maps"
+import axios from 'axios';
+
 import { ultraLight, shadesOfGrey } from '../utils/mapStyles';
+import Marker from './CircelMarker';
 
-const key = 'AIzaSyA5ZWLhFKwToJrthACmEfDk1K7x1d7tpSg';
+const url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson';
+const key = 'AIzaSyDmDSX8pHQ3_OiMSdlMx7m8HURtvMQuU9M';
 
-const map = props => {
+class Map extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            data: [],
+        }
+    }
 
-    return (
-    <GoogleMap
-        defaultZoom={10}
-        defaultCenter={{ lat: -34.397, lng: 150.644 }}
-        defaultOptions={{
-            styles: shadesOfGrey,
-        }}
-    >
-        <Marker position={{ lat: -34.397, lng: 150.644 }} />
-    </GoogleMap>
-    );
+    componentWillMount(){
+        this.updateData();
+        setInterval(this.updateData, 60 * 1000);
+    }
+
+    updateData = async () => {
+        const res = await axios.get(url);
+        const data = res.data.features;
+        this.setState({data: data});
+    }
+
+    render(){
+        return (
+            <GoogleMap
+                defaultZoom={3}
+                defaultCenter={{ lat: -34.397, lng: 150.644 }}
+                options={{
+                    styles: shadesOfGrey,
+                    streetViewControl: false,
+                    fullscreenControl: false,
+                    mapTypeControl: false,
+                }}
+            >        
+                {this.state.data.length && this.state.data.map(d => {
+                    return <Marker key={d.id} position={{ lat: d.geometry.coordinates[1], lng: d.geometry.coordinates[0] }} />
+                })}
+            </GoogleMap>
+        );
+    }
 }
 
-const MapWithHoc = withScriptjs(withGoogleMap(map));
+const MapWithHoc = withScriptjs(withGoogleMap(Map));
 
 export default () => (
     <MapWithHoc 
