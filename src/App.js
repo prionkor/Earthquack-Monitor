@@ -5,12 +5,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
 import './App.css';
-import { AppBar, Toolbar, IconButton, Typography, createMuiTheme, Badge } from '@material-ui/core';
+import { AppBar, Divider, Drawer, Toolbar, IconButton, Typography, createMuiTheme, Badge } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
-import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import MoreIcon from '@material-ui/icons/MoreVert';
+// import { faNewspaper } from '@fortawesome/free-regular-svg-icons';
+import { faFilter, faNewspaper, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,40 +28,67 @@ const theme = createMuiTheme({
   },
 });
 
-const App = () => {
+class App extends React.Component {
 
-  const classes = useStyles();
-  console.log(theme);
+  constructor(props){
+    super(props);
+    this.state = {
+      drawerOpen: false,
+    }
+  }
 
-  return (
-      <ThemeProvider theme={theme}>
-        
-        <AppBar color="dark" position="static">
-          <Toolbar>
-            
-            <Typography variant="h6" className={classes.title}>Earthquack Monitor</Typography>
-            
-            <IconButton aria-label="show 11 new notifications" color="inherit">
-              <FontAwesomeIcon icon={faFilter} color="#FFFFFF" />
-            </IconButton>
+  openDrawer = () => {
+    this.setState({drawerOpen: true});
+  }
 
-            <IconButton aria-label="show 11 new notifications" color="inherit">
-              <Badge badgeContent={11} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+  closeDrawer = () => {
+    this.setState({drawerOpen: false});
+  }
 
-            <IconButton aria-label="show 11 new notifications" color="inherit">
-              <Badge badgeContent={11} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            
-          </Toolbar>
-        </AppBar>
-        <Map />
-      </ThemeProvider>
-  );
+  render(){
+
+    const classes = useStyles();
+
+    return (
+        <ThemeProvider theme={theme}>
+          
+          <AppBar color="dark" position="static">
+
+            <Drawer
+              open={this.state.drawerOpen}
+              anchor="right"
+            >
+
+              <div>
+                <IconButton onClick={this.drawerClose}>
+                  {this.state.drawerOpen ? <FontAwesomeIcon icon={faChevronLeft} color="#FFFFFF" /> : <FontAwesomeIcon icon={faChevronRight} color="#FFFFFF" />}
+                </IconButton>
+              </div>
+              
+              <Divider />
+
+              <h1>News</h1>
+              
+            </Drawer>
+
+            <Toolbar>
+              
+              <Typography variant="h6" className={classes.title}>Earthquack Monitor</Typography>
+              
+              <IconButton aria-label="show 11 new notifications" color="inherit">
+                <FontAwesomeIcon icon={faFilter} color="#FFFFFF" />
+              </IconButton>
+
+              <IconButton onPress={this.openDrawer} aria-label="show 11 new notifications" color="inherit">
+                <FontAwesomeIcon icon={faNewspaper} color="#FFFFFF" />
+              </IconButton>
+              
+            </Toolbar>
+          </AppBar>
+          <Map />
+        </ThemeProvider>
+    );
+  }
 }
 
 export default App;
