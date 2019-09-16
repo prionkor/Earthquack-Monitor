@@ -1,7 +1,7 @@
 import React from 'react';
-import { Circle } from 'react-google-maps';
+import { Marker } from '@react-google-maps/api';
 
-/*function styleFeature(mag) {
+function styleFeature(mag) {
     var low = [151, 83, 34];   // color of mag 1.0
     var high = [5, 69, 54];  // color of mag 6.0 and above
     var minMag = 1.0;
@@ -15,11 +15,11 @@ import { Circle } from 'react-google-maps';
 
     return {
       icon: {
-        path: google.maps.SymbolPath.CIRCLE,
+        path: window.google.maps.SymbolPath.CIRCLE,
         strokeWeight: 0.5,
         strokeColor: 'transparent',
         fillColor: color,
-        fillOpacity: 2 / mag,
+        fillOpacity: .2, // 2/mag
         // while an exponent would technically be correct, quadratic looks nicer
         scale: Math.pow(mag, 2)
       },
@@ -35,18 +35,14 @@ import { Circle } from 'react-google-maps';
     }
 
     return 'hsl(' + color[0] + ',' + color[1] + '%,' + color[2] + '%)';
-  }*/
+  }
 
 export default props => {
-    return <React.Fragment>
-        <Circle
-            defaultCenter={props.position}
-            radius={20000}
-            options={{
-                strokeColor: "#ff0000",
-                fillColor: 'transparent',
-                strokeWeight: 1,
-            }}
-        />
-    </React.Fragment>
+  const markerProps = styleFeature(props.magnitude);
+  return <Marker
+    onMouseOver={props.onHover}
+    onMouseOut={props.onBlur}
+    position={props.position}
+    {...markerProps}
+  />
 }

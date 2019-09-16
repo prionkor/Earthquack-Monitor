@@ -1,14 +1,20 @@
 import React from 'react';
-import { GoogleMap, withGoogleMap, withScriptjs } from "react-google-maps"
+import { GoogleMap, LoadScript, InfoBox } from '@react-google-maps/api'
+
 import axios from 'axios';
 
 import { ultraLight, shadesOfGrey } from '../utils/mapStyles';
 import Marker from './CircelMarker';
+import { CircularProgress } from '@material-ui/core';
 
-const url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson';
+//const url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson';
+const url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson';
 const key = 'AIzaSyDmDSX8pHQ3_OiMSdlMx7m8HURtvMQuU9M';
+// const defaultCenter = { lat: 23.797911, lng: 90.414391 }; // Dhaka/Bangladesh
+const defaultCenter = {lat: -33.865427, lng: 151.196123};
 
 class Map extends React.Component {
+
     constructor(props){
         super(props);
         this.state = {
@@ -16,45 +22,57 @@ class Map extends React.Component {
         }
     }
 
-    componentWillMount(){
+    componentDidMount(){
         this.updateData();
         setInterval(this.updateData, 60 * 1000);
     }
 
     updateData = async () => {
         const res = await axios.get(url);
-        const data = res.data.features;
+        const data = res.data.features.filter(v => v.properties.mag >= 2);
+
         this.setState({data: data});
+    }
+
+    onHoverItem = item => {
+        this.setState({hoveredItem: item});
+    }
+
+    onBlurItem = () => {
+        this.setState({hoveredItem: null});
     }
 
     render(){
         return (
-            <GoogleMap
-                defaultZoom={3}
-                defaultCenter={{ lat: -34.397, lng: 150.644 }}
-                options={{
-                    styles: shadesOfGrey,
-                    streetViewControl: false,
-                    fullscreenControl: false,
-                    mapTypeControl: false,
-                }}
-            >        
-                {this.state.data.length && this.state.data.map(d => {
-                    return <Marker key={d.id} position={{ lat: d.geometry.coordinates[1], lng: d.geometry.coordinates[0] }} />
-                })}
-            </GoogleMap>
+            <LoadScript
+                id="script-loader"
+                googleMapsApiKey={key}
+                loadingElement={<CircularProgress />}
+                
+            >
+                <GoogleMap
+                    id="eq-map"
+                    mapContainerStyle={{height: '100vh'}}
+                    zoom={4}
+                    center={defaultCenter}
+                    options={{
+                        styles: shadesOfGrey,
+                        streetViewControl: false,
+                        fullscreenControl: false,
+                        mapTypeControl: false,
+                    }}
+                >  
+                    <React.Fragment>
+                        
+                    
+                        {this.state.data.length && this.state.data.map(d => {
+                            return <Marker key={d.id} onBlur={this.onBlurItem} onHover={e => this.onHoverItem(d, e)} magnitude={d.properties.mag} position={{ lat: d.geometry.coordinates[1], lng: d.geometry.coordinates[0] }} />
+                        })}
+                    </React.Fragment> 
+                </GoogleMap>
+            </LoadScript>
         );
     }
 }
 
-const MapWithHoc = withScriptjs(withGoogleMap(Map));
-
-export default () => (
-    <MapWithHoc 
-        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${key}`}
-        loadingElement={<div style={{ height: `100%` }} />}
-        containerElement={<div style={{ height: `95vh` }} />}
-        mapElement={<div style={{ height: `100%` }} />}
-    />
-);
-
+export default Map;
