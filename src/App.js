@@ -47,12 +47,12 @@ class App extends React.Component {
 
   render(){
 
-    const classes = useStyles();
+    // const classes = useStyles();
 
     return (
         <ThemeProvider theme={theme}>
           
-          <AppBar color="dark" position="static">
+          <AppBar color="inherit" position="static">
 
             <Drawer
               open={this.state.drawerOpen}
@@ -73,7 +73,7 @@ class App extends React.Component {
 
             <Toolbar>
               
-              <Typography variant="h6" className={classes.title}>Earthquack Monitor</Typography>
+              <Typography variant="h6" style={{flexGrow: 1}}>Earthquack Monitor</Typography>
               
               <IconButton aria-label="show 11 new notifications" color="inherit">
                 <FontAwesomeIcon icon={faFilter} color="#FFFFFF" />
