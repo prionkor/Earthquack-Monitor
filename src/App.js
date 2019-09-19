@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
 import './App.css';
-import { AppBar, Divider, Drawer, Toolbar, IconButton, Typography, createMuiTheme } from '@material-ui/core';
+import { AppBar, Divider, Drawer, Toolbar, IconButton, Typography, createMuiTheme, CssBaseline } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faNewspaper } from '@fortawesome/free-regular-svg-icons';
 import { faFilter, faNewspaper, faChevronLeft, faChevronRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
@@ -61,8 +61,8 @@ class App extends React.Component {
 
     return (
         <ThemeProvider theme={theme}>
-          
-          <AppBar color="inherit" position="sticky">
+          <CssBaseline color="default" />
+          <AppBar color="default" position="sticky">
 
             {this.state.showCredits && 
               <Credits open={this.state.showCredits} handleClose={this.handleCreditDialogClose} />
@@ -87,7 +87,7 @@ class App extends React.Component {
 
             <Toolbar>
               
-              <Typography variant="h6" className={classes.title}>Earthquake Monitor</Typography>
+              <Typography variant="h6" style={{flexGrow: 1}}>Earthquake Monitor</Typography>
               <IconButton aria-label="show 11 new notifications" color="inherit">
                 <FontAwesomeIcon icon={faFilter} color="#FFFFFF" />
               </IconButton>
