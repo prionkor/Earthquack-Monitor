@@ -1,15 +1,16 @@
 import React from 'react';
 import Map from './components/Map';
 import Credits from './components/Credits';
+import News from './components/News';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
 import './App.css';
-import { AppBar, Divider, Drawer, Toolbar, IconButton, Typography, createMuiTheme, CssBaseline } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Typography, createMuiTheme, CssBaseline } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faNewspaper } from '@fortawesome/free-regular-svg-icons';
-import { faFilter, faNewspaper, faChevronLeft, faChevronRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faFilter, faNewspaper, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -47,11 +48,11 @@ class App extends React.Component {
     this.setState({showCredits: true});
   }
 
-  openDrawer = () => {
+  handleOpenDrawer = () => {
     this.setState({drawerOpen: true});
   }
 
-  closeDrawer = () => {
+  handleCloseDrawer = () => {
     this.setState({drawerOpen: false});
   }
 
@@ -61,29 +62,16 @@ class App extends React.Component {
 
     return (
         <ThemeProvider theme={theme}>
-          <CssBaseline color="default" />
-          <AppBar color="default" position="sticky">
+
+          <CssBaseline />
+          
+          <AppBar color="inherit" position="sticky">
 
             {this.state.showCredits && 
               <Credits open={this.state.showCredits} handleClose={this.handleCreditDialogClose} />
             }
 
-            <Drawer
-              open={this.state.drawerOpen}
-              anchor="right"
-            >
-
-              <div>
-                <IconButton onClick={this.drawerClose}>
-                  {this.state.drawerOpen ? <FontAwesomeIcon icon={faChevronLeft} color="#FFFFFF" /> : <FontAwesomeIcon icon={faChevronRight} color="#FFFFFF" />}
-                </IconButton>
-              </div>
-              
-              <Divider />
-
-              <h1>News</h1>
-              
-            </Drawer>
+            <News open={this.state.drawerOpen} onOpenNews={this.handleOpenDrawer} onCloseNews={this.handleCloseDrawer}/>
 
             <Toolbar>
               
@@ -92,7 +80,7 @@ class App extends React.Component {
                 <FontAwesomeIcon icon={faFilter} color="#FFFFFF" />
               </IconButton>
 
-              <IconButton onPress={this.openDrawer} aria-label="show 11 new notifications" color="inherit">
+              <IconButton onClick={this.handleOpenDrawer} aria-label="show 11 new notifications" color="inherit">
                 <FontAwesomeIcon icon={faNewspaper} color="#FFFFFF" />
               </IconButton>
 
