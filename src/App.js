@@ -88,7 +88,6 @@ class App extends React.Component {
             <Toolbar>
               
               <Typography variant="h6" className={classes.title}>Earthquake Monitor</Typography>
-              
               <IconButton aria-label="show 11 new notifications" color="inherit">
                 <FontAwesomeIcon icon={faFilter} color="#FFFFFF" />
               </IconButton>
