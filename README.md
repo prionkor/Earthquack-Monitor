@@ -4,8 +4,8 @@ This applications shows visualization of recent earthquake data around the world
 
 ## Credits
 
-[*] Earthquake data provided by [USGS](https://earthquake.usgs.gov).
-[*] Project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+* Earthquake data provided by [USGS](https://earthquake.usgs.gov).
+* Project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Running The Application
 
