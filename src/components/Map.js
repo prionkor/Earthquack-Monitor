@@ -7,9 +7,9 @@ import { ultraLight, shadesOfGrey } from '../utils/mapStyles';
 import Marker from './CircelMarker';
 import { CircularProgress } from '@material-ui/core';
 
-//const url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson';
-const url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson';
-const key = 'AIzaSyDmDSX8pHQ3_OiMSdlMx7m8HURtvMQuU9M';
+const url = process.env.REACT_APP_DATA_FEED_URL;
+const key = process.env.REACT_APP_GOOGLE_API_KEY;
+
 // const defaultCenter = { lat: 23.797911, lng: 90.414391 }; // Dhaka/Bangladesh
 const defaultCenter = {lat: -33.865427, lng: 151.196123};
 
