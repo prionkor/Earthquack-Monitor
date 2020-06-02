@@ -13,7 +13,7 @@ const feedUrl = process.env.REACT_APP_NEWS_FEED_URL;
 
 const News = ({ open, onCloseNews }) => {
 
-    const [ news, setNews ] = useState([]);
+    // const [ news, setNews ] = useState([]);
 
     useEffect(() => {
         parseFeed();
@@ -29,6 +29,7 @@ const News = ({ open, onCloseNews }) => {
         <Drawer
             open={open}
             anchor="right"
+            onClose={onCloseNews}
         >
             <div>
                 <IconButton onClick={onCloseNews}>

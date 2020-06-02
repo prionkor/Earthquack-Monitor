@@ -6,7 +6,7 @@ export default props => {
         <Dialog
             open={props.open}
             fullWidth={true}
-            maxWidth="lg"
+            maxWidth="md"
             onClose={props.handleClose}
         >
             <DialogTitle>Credits</DialogTitle>
@@ -14,12 +14,13 @@ export default props => {
                 <Typography variant="body1">
                     <p>
                         This applications shows visualization of recent earthquake data around the world.
-                        Earthquake monitor app is greatly inspired by <a target="_blank" rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=com.joshclemm.android.quake">Earthquake Alert!</a> app 
+                        Inspired by <a target="_blank" rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=com.joshclemm.android.quake">Earthquake Alert!</a> app 
                         by <a href="https://joshclemm.com/" target="_blank" rel="noopener noreferrer">Josh Clemm</a>.
                     </p>
                     <Typography variant="h5">Resources</Typography>
                     <ul>
-                        <li><a target="_blank" rel="noopener noreferrer" href="https://github.com/prionkor/Earthquack-Monitor">Github repository</a></li>
+                        <li><a target="_blank" rel="noopener noreferrer" href="https://github.com/prionkor/Earthquake-Monitor">Github repository</a></li>
+                        <li>Earthquake data provided by <a target="_blank" rel="noopener noreferrer" href="https://earthquake.usgs.gov">USGS</a></li>
                     </ul>
                 </Typography>
             </DialogContent>

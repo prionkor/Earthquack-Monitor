@@ -9,8 +9,8 @@ import { CircularProgress } from '@material-ui/core';
 const url = process.env.REACT_APP_DATA_FEED_URL;
 const key = process.env.REACT_APP_GOOGLE_API_KEY;
 
-// const defaultCenter = { lat: 23.797911, lng: 90.414391 }; // Dhaka/Bangladesh
-const defaultCenter = {lat: -33.865427, lng: 151.196123};
+const defaultCenter = { lat: 23.797911, lng: 90.414391 }; // Dhaka/Bangladesh
+// const defaultCenter = {lat: -33.865427, lng: 151.196123};
 const markerClusterOption = {
     imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
 };
@@ -43,7 +43,7 @@ const Map = () => {
         <LoadScript
             id="script-loader"
             googleMapsApiKey={key}
-            loadingElement={<CircularProgress />}
+            loadingElement={<CircularProgress color="#FFFFFF" />}
             
         >
             <GoogleMap
