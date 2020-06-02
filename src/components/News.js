@@ -11,7 +11,7 @@ const parser = new Parser(
 );
 const feedUrl = process.env.REACT_APP_NEWS_FEED_URL;
 
-const News = () => {
+const News = ({ open, onCloseNews }) => {
 
     const [ news, setNews ] = useState([]);
 
@@ -27,12 +27,12 @@ const News = () => {
 
     return (
         <Drawer
-            open={this.props.open}
+            open={open}
             anchor="right"
         >
             <div>
-                <IconButton onClick={this.props.onCloseNews}>
-                    {this.props.open ? <FontAwesomeIcon icon={faChevronRight} /> : <FontAwesomeIcon icon={faChevronLeft} />}
+                <IconButton onClick={onCloseNews}>
+                    {open ? <FontAwesomeIcon icon={faChevronRight} /> : <FontAwesomeIcon icon={faChevronLeft} />}
                 </IconButton>
             </div>
             

@@ -20,7 +20,7 @@ const Map = () => {
     
     useEffect(() => {
         updateData();
-        setInterval(this.updateData, 60 * 1000);
+        setInterval(updateData, 60 * 1000);
     }, []);
 
     const updateData = async () => {
