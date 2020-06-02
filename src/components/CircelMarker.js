@@ -37,12 +37,13 @@ function styleFeature(mag) {
     return 'hsl(' + color[0] + ',' + color[1] + '%,' + color[2] + '%)';
   }
 
-export default props => {
-  const markerProps = styleFeature(props.magnitude);
+export default ({ onHover, onBlur, position, magnitude, clusterer }) => {
+  const markerProps = styleFeature(magnitude);
   return <Marker
-    onMouseOver={props.onHover}
-    onMouseOut={props.onBlur}
-    position={props.position}
+    onMouseOver={onHover}
+    onMouseOut={onBlur}
+    position={position}
+    clusterer={clusterer}
     {...markerProps}
   />
 }

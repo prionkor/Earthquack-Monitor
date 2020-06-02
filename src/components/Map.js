@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { GoogleMap, LoadScript, InfoBox } from '@react-google-maps/api'
+import { GoogleMap, LoadScript, InfoBox, MarkerClusterer } from '@react-google-maps/api';
 
 import axios from 'axios';
-
 import { shadesOfGrey } from '../utils/mapStyles';
 import Marker from './CircelMarker';
 import { CircularProgress } from '@material-ui/core';
@@ -12,6 +11,9 @@ const key = process.env.REACT_APP_GOOGLE_API_KEY;
 
 // const defaultCenter = { lat: 23.797911, lng: 90.414391 }; // Dhaka/Bangladesh
 const defaultCenter = {lat: -33.865427, lng: 151.196123};
+const markerClusterOption = {
+    imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
+};
 
 const Map = () => {
 
@@ -56,11 +58,11 @@ const Map = () => {
                     mapTypeControl: false,
                 }}
             >  
-                <>
-                    {data.length && data.map(d => {
-                        return <Marker key={d.id} onBlur={onBlurItem} onHover={e => onHoverItem(d, e)} magnitude={d.properties.mag} position={{ lat: d.geometry.coordinates[1], lng: d.geometry.coordinates[0] }} />
-                    })}
-                </> 
+                { data.length && 
+                    <MarkerClusterer averageCenter={true} options={markerClusterOption}>
+                        {clusterer => data.map((d, i) => <Marker clusterer={clusterer} key={i} onBlur={onBlurItem} onHover={e => onHoverItem(d, e)} magnitude={d.properties.mag} position={{ lat: d.geometry.coordinates[1], lng: d.geometry.coordinates[0] }} />)}
+                    </MarkerClusterer>
+                }
             </GoogleMap>
         </LoadScript>
     );
